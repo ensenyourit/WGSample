@@ -1,0 +1,79 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-module-flags: -target arm64-apple-ios15.0-macabi -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SampleWG
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import Accelerate
+import CoreGraphics
+import CoreML
+import Foundation
+@_exported import SampleWG
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+extension CoreGraphics.CGImage {
+  @nonobjc public func toByteArrayRGBA() -> [Swift.UInt8]
+  @nonobjc public class func fromByteArrayRGBA(_ bytes: [Swift.UInt8], width: Swift.Int, height: Swift.Int) -> CoreGraphics.CGImage?
+  @nonobjc public class func fromByteArrayGray(_ bytes: [Swift.UInt8], width: Swift.Int, height: Swift.Int) -> CoreGraphics.CGImage?
+}
+extension UIKit.UIImage {
+  @nonobjc public func resized(to newSize: CoreFoundation.CGSize, scale: CoreFoundation.CGFloat = 1) -> UIKit.UIImage
+  public func pixelBuffer(width: Swift.Int, height: Swift.Int) -> CoreVideo.CVPixelBuffer?
+}
+@objc @_inheritsConvenienceInitializers public class SWG : ObjectiveC.NSObject {
+  public func processImage(image: UIKit.UIImage, completion: @escaping (UIKit.UIImage) -> ())
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol MultiArrayType : Swift.Comparable {
+  static var multiArrayDataType: CoreML.MLMultiArrayDataType { get }
+  static func + (lhs: Self, rhs: Self) -> Self
+  static func - (lhs: Self, rhs: Self) -> Self
+  static func * (lhs: Self, rhs: Self) -> Self
+  static func / (lhs: Self, rhs: Self) -> Self
+  init(_: Swift.Int)
+  var toUInt8: Swift.UInt8 { get }
+}
+extension Swift.Double : SampleWG.MultiArrayType {
+  public static var multiArrayDataType: CoreML.MLMultiArrayDataType {
+    get
+  }
+  public var toUInt8: Swift.UInt8 {
+    get
+  }
+}
+extension Swift.Float : SampleWG.MultiArrayType {
+  public static var multiArrayDataType: CoreML.MLMultiArrayDataType {
+    get
+  }
+  public var toUInt8: Swift.UInt8 {
+    get
+  }
+}
+extension Swift.Int32 : SampleWG.MultiArrayType {
+  public static var multiArrayDataType: CoreML.MLMultiArrayDataType {
+    get
+  }
+  public var toUInt8: Swift.UInt8 {
+    get
+  }
+}
+extension CoreML.MLMultiArray {
+  public func cgImage(min: Swift.Double = 0, max: Swift.Double = 255, channel: Swift.Int? = nil, axes: (Swift.Int, Swift.Int, Swift.Int)? = nil) -> CoreGraphics.CGImage?
+  public func toRawBytes<T>(min: T, max: T, channel: Swift.Int? = nil, axes: (Swift.Int, Swift.Int, Swift.Int)? = nil) -> (bytes: [Swift.UInt8], width: Swift.Int, height: Swift.Int, channels: Swift.Int)? where T : SampleWG.MultiArrayType
+}
+public func createCGImage(fromFloatArray features: CoreML.MLMultiArray, min: Swift.Float = 0, max: Swift.Float = 255) -> CoreGraphics.CGImage?
+extension CoreML.MLMultiArray {
+  public func image(min: Swift.Double = 0, max: Swift.Double = 255, channel: Swift.Int? = nil, axes: (Swift.Int, Swift.Int, Swift.Int)? = nil) -> UIKit.UIImage?
+}
+public func createUIImage(fromFloatArray features: CoreML.MLMultiArray, min: Swift.Float = 0, max: Swift.Float = 255) -> UIKit.UIImage?
+public func argmax(_ array: [Swift.Float], count: Swift.Int? = nil) -> (Swift.Int, Swift.Float)
+public func argmax(_ ptr: Swift.UnsafePointer<Swift.Float>, count: Swift.Int, stride: Swift.Int = 1) -> (Swift.Int, Swift.Float)
+public func argmax(_ array: [Swift.Double], count: Swift.Int? = nil) -> (Swift.Int, Swift.Double)
+public func argmax(_ ptr: Swift.UnsafePointer<Swift.Double>, count: Swift.Int, stride: Swift.Int = 1) -> (Swift.Int, Swift.Double)
+public func clamp<T>(_ x: T, min: T, max: T) -> T where T : Swift.Comparable
+public func sigmoid(_ x: Swift.Float) -> Swift.Float
+public func sigmoid(_ x: Swift.Double) -> Swift.Double
+public func sigmoid(_ x: Swift.UnsafeMutablePointer<Swift.Float>, count: Swift.Int)
+public func sigmoid(_ x: Swift.UnsafeMutablePointer<Swift.Double>, count: Swift.Int)
+public func softmax(_ x: [Swift.Float]) -> [Swift.Float]

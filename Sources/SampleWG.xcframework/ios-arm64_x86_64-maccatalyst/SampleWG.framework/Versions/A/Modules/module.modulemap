@@ -1,0 +1,11 @@
+framework module SampleWG {
+  umbrella header "SampleWG.h"
+
+  export *
+  module * { export * }
+}
+
+module SampleWG.Swift {
+  header "SampleWG-Swift.h"
+  requires objc
+}
